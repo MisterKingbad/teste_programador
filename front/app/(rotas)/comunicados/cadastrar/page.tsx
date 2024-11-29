@@ -1,6 +1,6 @@
 'use client'
 
-export function CadastrarComunicado () {
+export default function CadastrarComunicado () {
     return (
         <></>
     )

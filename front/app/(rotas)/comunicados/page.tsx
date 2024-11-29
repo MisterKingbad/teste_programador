@@ -1,12 +1,23 @@
 'use client'
 
-import { Autocomplete, AutocompleteRenderInputParams, Box, Button, Card, Container, Divider, Fade, FormControl, Grid2, IconButton, InputAdornment, InputLabel, MenuItem, Pagination, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Card, Container, Fade, FormControl, Grid2, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from "@mui/icons-material/Search";
+import { useRouter } from "next/navigation";
 
 export function Comunicados() {
+    const router = useRouter()
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+    const cadastrarComunicado = () => {
+        router.push("/comunicados/cadastrar")
+    }
+
+    const editarComunicado = () => {
+
+    }
+    
     return (
         <Container maxWidth={false} disableGutters>
             <Card variant="elevation" sx={{ boxShadow: "0px 1px 4px 1px rgba(50, 50, 50, 0.22)" }}>
@@ -99,6 +110,7 @@ export function Comunicados() {
                                 }}
                                 variant="contained"
                                 color="secondary"
+                                onClick={cadastrarComunicado}
                             >
                                 <AddIcon fontSize="small" />
                             </Button>

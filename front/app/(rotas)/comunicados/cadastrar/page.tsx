@@ -20,7 +20,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import BackupIcon from '@mui/icons-material/Backup';
 import LinkIcon from '@mui/icons-material/Link';
 
-const Android12Switch = styled(Switch)(({ theme }) => ({
+const Android12Switch = styled(Switch)(() => ({
   '& .MuiSwitch-track': {
     borderRadius: 22 / 2,
     '&::before, &::after': {

@@ -6,7 +6,6 @@ import {
   Card,
   Container,
   FormControl,
-  FormControlLabel,
   Grid2,
   InputLabel,
   MenuItem,
@@ -60,7 +59,7 @@ export default function CadastrarComunicado() {
           justifyContent="space-between"
           alignItems="center"
           pt={4}
-          pb={1}
+          pb={4}
           px={3}
         >
           <Typography fontWeight="bold">Criação de comunicado</Typography>
@@ -209,7 +208,7 @@ export default function CadastrarComunicado() {
               <Box display="flex" gap={3}>
                 <Button startIcon={<FileUploadIcon/>} variant="contained" color="inherit" sx={{
                   backgroundColor: "#ffffff",
-                  "&:hover": { backgroundColor: "#7f3da0" },
+                  "&:hover": { backgroundColor: "#e7e7e7" },
                 }}>
                   Insira os arquivos do comunicado.
                 </Button>
@@ -225,7 +224,10 @@ export default function CadastrarComunicado() {
             <Grid2 size={20}>
               <Box display="flex" justifyContent={"space-between"}>
                 <Box></Box>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" sx={{
+                  backgroundColor: "#00BCD4",
+                  "&:hover": { backgroundColor: "#20c5db" }
+                }}>
                   Enviar Comunicado
                 </Button>
               </Box>

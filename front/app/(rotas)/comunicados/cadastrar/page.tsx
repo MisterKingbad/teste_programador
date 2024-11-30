@@ -5,19 +5,33 @@ import {
   Button,
   Card,
   Container,
+  Divider,
   FormControl,
   Grid2,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
   styled,
   Switch,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+  toggleButtonGroupClasses,
   Typography,
 } from "@mui/material";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import BackupIcon from '@mui/icons-material/Backup';
 import LinkIcon from '@mui/icons-material/Link';
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
+import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const Android12Switch = styled(Switch)(() => ({
   '& .MuiSwitch-track': {
@@ -31,7 +45,7 @@ const Android12Switch = styled(Switch)(() => ({
       height: 16,
     },
   },
-'& .MuiSwitch-switchBase': {
+  '& .MuiSwitch-switchBase': {
     transitionDuration: '300ms',
     '&.Mui-checked': {
       transform: 'translateX(16px)',
@@ -44,6 +58,22 @@ const Android12Switch = styled(Switch)(() => ({
         opacity: 0.5,
       },
     },
+  },
+}));
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  [`& .${toggleButtonGroupClasses.grouped}`]: {
+    margin: theme.spacing(0.5),
+    border: 0,
+    borderRadius: theme.shape.borderRadius,
+    [`&.${toggleButtonGroupClasses.disabled}`]: {
+      border: 0,
+    },
+  },
+  [`& .${toggleButtonGroupClasses.middleButton},& .${toggleButtonGroupClasses.lastButton}`]:
+  {
+    marginLeft: -1,
+    borderLeft: '1px solid transparent',
   },
 }));
 
@@ -151,7 +181,7 @@ export default function CadastrarComunicado() {
                   padding: "8px 16px",
                   fontSize: "14px",
                 }}
-                endIcon={<LinkIcon/>}
+                endIcon={<LinkIcon />}
                 disabled
               >
                 Copiar Link
@@ -161,27 +191,163 @@ export default function CadastrarComunicado() {
               <Typography fontWeight="bold" variant="subtitle2">
                 Conteúdo do comunicado
               </Typography>
-              <FormControl size="small" fullWidth id="input-nome">
-                <TextField
-                  id="outlined-multiline-static"
-                  multiline
-                  rows={4}
-                  defaultValue="Default Value"
-                />
-              </FormControl>
+              <Card
+                variant="outlined"
+                sx={{
+                  mt: 0.5,
+                  px: 0.5,
+                  pt: 0.5,
+                  pb: 0.5,
+                  borderRadius: 0
+                }}>
+
+                <FormControl size="small" fullWidth id="input-nome">
+                  <Paper
+                    elevation={0}
+                    sx={(theme) => ({
+                      display: 'flex',
+                      border: `1px solid ${theme.palette.divider}`,
+                      flexWrap: 'wrap',
+                      borderRadius: 0
+                    })}
+                  >
+                    <StyledToggleButtonGroup
+                      size="small"
+                      // value={alignment}
+                      exclusive
+                      // onChange={handleAlignment}
+                      aria-label="text alignment"
+                    >
+                      <ToggleButton value="left" aria-label="left aligned">
+                        <FormatAlignLeftIcon />
+                      </ToggleButton>
+                      <ToggleButton value="center" aria-label="centered">
+                        <FormatAlignCenterIcon />
+                      </ToggleButton>
+                      <ToggleButton value="right" aria-label="right aligned">
+                        <FormatAlignRightIcon />
+                      </ToggleButton>
+                      <ToggleButton value="justify" aria-label="justified" disabled>
+                        <FormatAlignJustifyIcon />
+                      </ToggleButton>
+                    </StyledToggleButtonGroup>
+                    <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
+                    <StyledToggleButtonGroup
+                      size="small"
+                      // value={formats}
+                      // onChange={handleFormat}
+                      aria-label="text formatting"
+                    >
+                      <ToggleButton value="bold" aria-label="bold">
+                        <FormatBoldIcon />
+                      </ToggleButton>
+                      <ToggleButton value="italic" aria-label="italic">
+                        <FormatItalicIcon />
+                      </ToggleButton>
+                      <ToggleButton value="underlined" aria-label="underlined">
+                        <FormatUnderlinedIcon />
+                      </ToggleButton>
+                      <ToggleButton value="color" aria-label="color" disabled>
+                        <FormatColorFillIcon />
+                        <ArrowDropDownIcon />
+                      </ToggleButton>
+                    </StyledToggleButtonGroup>
+                  </Paper>
+                  <TextField
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 0
+                      },
+                    }}
+                    multiline
+                    rows={8}
+                    fullWidth
+                    placeholder="Escreva seu texto aqui..."
+                    label="Insira o conteúdo do comunicado"
+                  />
+                </FormControl>
+              </Card>
             </Grid2>
             <Grid2 size={20}>
               <Typography fontWeight="bold" variant="subtitle2">
                 Breve descrição
               </Typography>
-              <FormControl size="small" fullWidth id="input-nome">
-                <TextField
-                  id="outlined-multiline-static"
-                  multiline
-                  rows={4}
-                  defaultValue="Default Value"
-                />
-              </FormControl>
+              <Card
+                variant="outlined"
+                sx={{
+                  mt: 0.5,
+                  px: 0.5,
+                  pt: 0.5,
+                  pb: 0.5,
+                  borderRadius: 0
+                }}>
+
+                <FormControl size="small" fullWidth id="input-nome">
+                  <Paper
+                    elevation={0}
+                    sx={(theme) => ({
+                      display: 'flex',
+                      border: `1px solid ${theme.palette.divider}`,
+                      flexWrap: 'wrap',
+                      borderRadius: 0
+                    })}
+                  >
+                    <StyledToggleButtonGroup
+                      size="small"
+                      // value={alignment}
+                      exclusive
+                      // onChange={handleAlignment}
+                      aria-label="text alignment"
+                    >
+                      <ToggleButton value="left" aria-label="left aligned">
+                        <FormatAlignLeftIcon />
+                      </ToggleButton>
+                      <ToggleButton value="center" aria-label="centered">
+                        <FormatAlignCenterIcon />
+                      </ToggleButton>
+                      <ToggleButton value="right" aria-label="right aligned">
+                        <FormatAlignRightIcon />
+                      </ToggleButton>
+                      <ToggleButton value="justify" aria-label="justified" disabled>
+                        <FormatAlignJustifyIcon />
+                      </ToggleButton>
+                    </StyledToggleButtonGroup>
+                    <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
+                    <StyledToggleButtonGroup
+                      size="small"
+                      // value={formats}
+                      // onChange={handleFormat}
+                      aria-label="text formatting"
+                    >
+                      <ToggleButton value="bold" aria-label="bold">
+                        <FormatBoldIcon />
+                      </ToggleButton>
+                      <ToggleButton value="italic" aria-label="italic">
+                        <FormatItalicIcon />
+                      </ToggleButton>
+                      <ToggleButton value="underlined" aria-label="underlined">
+                        <FormatUnderlinedIcon />
+                      </ToggleButton>
+                      <ToggleButton value="color" aria-label="color" disabled>
+                        <FormatColorFillIcon />
+                        <ArrowDropDownIcon />
+                      </ToggleButton>
+                    </StyledToggleButtonGroup>
+                  </Paper>
+                  <TextField
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 0
+                      },
+                    }}
+                    multiline
+                    rows={8}
+                    fullWidth
+                    placeholder="Escreva seu texto aqui..."
+                    label="Insira o conteúdo do comunicado"
+                  />
+                </FormControl>
+              </Card>
             </Grid2>
             <Grid2 size={20}>
               <Typography fontWeight="bold" variant="subtitle2">
@@ -206,13 +372,13 @@ export default function CadastrarComunicado() {
             </Grid2>
             <Grid2 size={20}>
               <Box display="flex" gap={3}>
-                <Button startIcon={<FileUploadIcon/>} variant="contained" color="inherit" sx={{
+                <Button startIcon={<FileUploadIcon />} variant="contained" color="inherit" sx={{
                   backgroundColor: "#ffffff",
                   "&:hover": { backgroundColor: "#e7e7e7" },
                 }}>
                   Insira os arquivos do comunicado.
                 </Button>
-                <Button endIcon={<BackupIcon/>} variant="contained" color="secondary" sx={{
+                <Button endIcon={<BackupIcon />} variant="contained" color="secondary" sx={{
                   backgroundColor: "#642683",
                   "&:hover": { backgroundColor: "#7f3da0" },
                   border: 1, borderStyle: "dashed", borderColor: "black"

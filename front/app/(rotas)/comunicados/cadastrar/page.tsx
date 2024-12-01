@@ -23,15 +23,12 @@ import {
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import BackupIcon from '@mui/icons-material/Backup';
 import LinkIcon from '@mui/icons-material/Link';
-import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
-import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
-import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useState } from "react";
 
 const Android12Switch = styled(Switch)(() => ({
   '& .MuiSwitch-track': {
@@ -78,6 +75,17 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 }));
 
 export default function CadastrarComunicado() {
+  const [formats, setFormats] = useState<string[]>([]); // Armazena as opções selecionadas
+  const [content, setContent] = useState<string>(""); // Armazena o conteúdo do TextField
+
+  // Gerencia a seleção de formatos
+  const handleFormatChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newFormats: string[]
+  ) => {
+    setFormats(newFormats);
+  };
+
   return (
     <Container maxWidth={false} disableGutters>
       <Card
@@ -213,8 +221,8 @@ export default function CadastrarComunicado() {
                   >
                     <StyledToggleButtonGroup
                       size="small"
-                      // value={formats}
-                      // onChange={handleFormat}
+                      value={formats}
+              onChange={handleFormatChange}
                       aria-label="text formatting"
                     >
                       <ToggleButton value="bold" aria-label="bold">
@@ -238,6 +246,17 @@ export default function CadastrarComunicado() {
                         borderRadius: 0
                       },
                     }}
+                    value={content}
+            onChange={(e) => setContent(e.target.value)}
+            InputProps={{
+              style: {
+                fontWeight: formats.includes("bold") ? "bold" : "normal",
+                fontStyle: formats.includes("italic") ? "italic" : "normal",
+                textDecoration: formats.includes("underlined")
+                  ? "underline"
+                  : "none",
+              },
+            }}
                     multiline
                     rows={8}
                     fullWidth

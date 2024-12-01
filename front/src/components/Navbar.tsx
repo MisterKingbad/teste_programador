@@ -25,7 +25,7 @@ const Navbar: React.FC<any> = ({ children }: any) => {
                         <Grid2 gap={1} display="flex" justifyContent="center" alignItems="center" size="grow">
                             <Link href={'/'} style={{ textDecoration: 'none', color: 'white' }}>
                                 <Box display="flex" alignItems="center">
-                                    <Box marginRight={1} sx={{ display: { xs: 'None', md: 'flex' } }}>
+                                    <Box marginRight={1} sx={{ display: { xs: 'flex', md: 'flex' } }}>
                                         <Box sx={{ display: 'flex', border: '1px', borderColor: '#D9569A', borderStyle: 'solid', width: '100%', borderRadius: '50%', backgroundColor: '#D9569A', py: 1, px: 1 }}>
                                             <HomeTwoToneIcon sx={{ color: "#ffff" }} fontSize="medium" />
                                         </Box>

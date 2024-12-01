@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   Container,
-  Divider,
   FormControl,
   Grid2,
   InputLabel,
@@ -26,8 +25,6 @@ import LinkIcon from '@mui/icons-material/Link';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
-import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useState } from "react";
 
 const Android12Switch = styled(Switch)(() => ({
@@ -75,15 +72,24 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 }));
 
 export default function CadastrarComunicado() {
-  const [formats, setFormats] = useState<string[]>([]); // Armazena as opções selecionadas
-  const [content, setContent] = useState<string>(""); // Armazena o conteúdo do TextField
+  const [formats, setFormats] = useState<{ [key: string]: string[] }>({});
+  const [contents, setContents] = useState<{ [key: string]: string }>({});
 
-  // Gerencia a seleção de formatos
   const handleFormatChange = (
-    event: React.MouseEvent<HTMLElement>,
+    field: string,
     newFormats: string[]
   ) => {
-    setFormats(newFormats);
+    setFormats((prevFormats) => ({
+      ...prevFormats,
+      [field]: newFormats,
+    }));
+  };
+
+  const handleContentChange = (field: string, value: string) => {
+    setContents((prevContents) => ({
+      ...prevContents,
+      [field]: value,
+    }));
   };
 
   return (
@@ -113,7 +119,6 @@ export default function CadastrarComunicado() {
                 <Select
                   fullWidth
                   size="small"
-                  label="Selecione o tipo de conteúdo"
                 >
                   <MenuItem value="">
                     <em>None</em>
@@ -221,8 +226,8 @@ export default function CadastrarComunicado() {
                   >
                     <StyledToggleButtonGroup
                       size="small"
-                      value={formats}
-              onChange={handleFormatChange}
+                      value={formats["conteudo"] || []}
+                      onChange={(_, newFormats) => handleFormatChange("conteudo", newFormats)}
                       aria-label="text formatting"
                     >
                       <ToggleButton value="bold" aria-label="bold">
@@ -234,10 +239,6 @@ export default function CadastrarComunicado() {
                       <ToggleButton value="underlined" aria-label="underlined">
                         <FormatUnderlinedIcon />
                       </ToggleButton>
-                      <ToggleButton value="color" aria-label="color" disabled>
-                        <FormatColorFillIcon />
-                        <ArrowDropDownIcon />
-                      </ToggleButton>
                     </StyledToggleButtonGroup>
                   </Paper>
                   <TextField
@@ -246,17 +247,23 @@ export default function CadastrarComunicado() {
                         borderRadius: 0
                       },
                     }}
-                    value={content}
-            onChange={(e) => setContent(e.target.value)}
-            InputProps={{
-              style: {
-                fontWeight: formats.includes("bold") ? "bold" : "normal",
-                fontStyle: formats.includes("italic") ? "italic" : "normal",
-                textDecoration: formats.includes("underlined")
-                  ? "underline"
-                  : "none",
-              },
-            }}
+                    value={contents["conteudo"] || ""}
+                    onChange={(e) => handleContentChange("conteudo", e.target.value)}
+                    slotProps={{
+                      input: {
+                        style: {
+                          fontWeight: (formats["conteudo"] || []).includes("bold")
+                            ? "bold"
+                            : "normal",
+                          fontStyle: (formats["conteudo"] || []).includes("italic")
+                            ? "italic"
+                            : "normal",
+                          textDecoration: (formats["conteudo"] || []).includes("underlined")
+                            ? "underline"
+                            : "none",
+                        },
+                      },
+                    }}
                     multiline
                     rows={8}
                     fullWidth
@@ -292,8 +299,8 @@ export default function CadastrarComunicado() {
                   >
                     <StyledToggleButtonGroup
                       size="small"
-                      // value={formats}
-                      // onChange={handleFormat}
+                      value={formats["descricao"] || []}
+                      onChange={(_, newFormats) => handleFormatChange("descricao", newFormats)}
                       aria-label="text formatting"
                     >
                       <ToggleButton value="bold" aria-label="bold">
@@ -305,16 +312,29 @@ export default function CadastrarComunicado() {
                       <ToggleButton value="underlined" aria-label="underlined">
                         <FormatUnderlinedIcon />
                       </ToggleButton>
-                      <ToggleButton value="color" aria-label="color" disabled>
-                        <FormatColorFillIcon />
-                        <ArrowDropDownIcon />
-                      </ToggleButton>
                     </StyledToggleButtonGroup>
                   </Paper>
                   <TextField
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         borderRadius: 0
+                      },
+                    }}
+                    value={contents["descricao"] || ""}
+                    onChange={(e) => handleContentChange("descricao", e.target.value)}
+                    slotProps={{
+                      input: {
+                        style: {
+                          fontWeight: (formats["descricao"] || []).includes("bold")
+                            ? "bold"
+                            : "normal",
+                          fontStyle: (formats["descricao"] || []).includes("italic")
+                            ? "italic"
+                            : "normal",
+                          textDecoration: (formats["descricao"] || []).includes("underlined")
+                            ? "underline"
+                            : "none",
+                        },
                       },
                     }}
                     multiline

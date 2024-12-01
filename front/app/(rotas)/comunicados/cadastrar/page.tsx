@@ -213,27 +213,6 @@ export default function CadastrarComunicado() {
                   >
                     <StyledToggleButtonGroup
                       size="small"
-                      // value={alignment}
-                      exclusive
-                      // onChange={handleAlignment}
-                      aria-label="text alignment"
-                    >
-                      <ToggleButton value="left" aria-label="left aligned">
-                        <FormatAlignLeftIcon />
-                      </ToggleButton>
-                      <ToggleButton value="center" aria-label="centered">
-                        <FormatAlignCenterIcon />
-                      </ToggleButton>
-                      <ToggleButton value="right" aria-label="right aligned">
-                        <FormatAlignRightIcon />
-                      </ToggleButton>
-                      <ToggleButton value="justify" aria-label="justified" disabled>
-                        <FormatAlignJustifyIcon />
-                      </ToggleButton>
-                    </StyledToggleButtonGroup>
-                    <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
-                    <StyledToggleButtonGroup
-                      size="small"
                       // value={formats}
                       // onChange={handleFormat}
                       aria-label="text formatting"
@@ -292,27 +271,6 @@ export default function CadastrarComunicado() {
                       borderRadius: 0
                     })}
                   >
-                    <StyledToggleButtonGroup
-                      size="small"
-                      // value={alignment}
-                      exclusive
-                      // onChange={handleAlignment}
-                      aria-label="text alignment"
-                    >
-                      <ToggleButton value="left" aria-label="left aligned">
-                        <FormatAlignLeftIcon />
-                      </ToggleButton>
-                      <ToggleButton value="center" aria-label="centered">
-                        <FormatAlignCenterIcon />
-                      </ToggleButton>
-                      <ToggleButton value="right" aria-label="right aligned">
-                        <FormatAlignRightIcon />
-                      </ToggleButton>
-                      <ToggleButton value="justify" aria-label="justified" disabled>
-                        <FormatAlignJustifyIcon />
-                      </ToggleButton>
-                    </StyledToggleButtonGroup>
-                    <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
                     <StyledToggleButtonGroup
                       size="small"
                       // value={formats}

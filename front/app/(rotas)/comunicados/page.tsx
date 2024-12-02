@@ -4,6 +4,7 @@ import { Box, Button, Card, Container, Divider, Fade, FormControl, Grid2, InputL
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from "@mui/icons-material/Search";
 import CachedIcon from '@mui/icons-material/Cached';
+import EditIcon from '@mui/icons-material/Edit';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { comunicadoService } from "@/src/services/comunicado/comunicadoService";
@@ -386,7 +387,7 @@ export function Comunicados() {
                                                     color="secondary"
                                                     onClick={editarComunicado}
                                                 >
-                                                    <AddIcon fontSize="small" />
+                                                    <EditIcon fontSize="small" />
                                                 </Button>
                                             </Tooltip>
                                         </TableCell>
@@ -493,7 +494,7 @@ export function Comunicados() {
                                             color="secondary"
                                             onClick={editarComunicado}
                                         >
-                                            <AddIcon fontSize="small" />
+                                            <EditIcon fontSize="small" />
                                         </Button>
                                     </Tooltip>
                                 </Typography>

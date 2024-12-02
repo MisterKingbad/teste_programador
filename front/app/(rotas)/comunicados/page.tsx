@@ -1,22 +1,51 @@
 'use client'
 
-import { Box, Button, Card, Container, Fade, FormControl, Grid2, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Card, Container, Fade, FormControl, Grid2, InputLabel, MenuItem, Select, styled, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from "@mui/icons-material/Search";
+import CachedIcon from '@mui/icons-material/Cached';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { comunicadoService } from "@/src/services/comunicado/comunicadoService";
+
+const Android12Switch = styled(Switch)(() => ({
+    '& .MuiSwitch-track': {
+        borderRadius: 22 / 2,
+        '&::before, &::after': {
+            content: '""',
+            position: 'absolute',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            width: 16,
+            height: 16,
+        },
+    },
+    '& .MuiSwitch-switchBase': {
+        transitionDuration: '300ms',
+        '&.Mui-checked': {
+            transform: 'translateX(16px)',
+            color: '#273481',
+            '& + .MuiSwitch-track': {
+                backgroundColor: '#273481',
+                opacity: 0.5,
+            },
+            '&.Mui-disabled + .MuiSwitch-track': {
+                opacity: 0.5,
+            },
+        },
+    },
+}));
 
 export function Comunicados() {
     const service = comunicadoService()
     const router = useRouter()
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-    const [comunicados, setComunicados] = useState([]);
+    const [comunicados, setComunicados] = useState<any[]>([]);
 
     const getAllComunicado = async () => {
         await service.getComunicados().then((response) => {
-            setComunicados(response.data);
+            setComunicados(response);
         }).catch((err) => {
             console.log(err)
         })
@@ -152,7 +181,6 @@ export function Comunicados() {
                         <Table stickyHeader>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell />
                                     <TableCell
                                         sx={{ minWidth: 50, flex: 1, wordBreak: "break-word" }}
                                     >
@@ -307,7 +335,83 @@ export function Comunicados() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-
+                                {comunicados.map((c, i) => (
+                                    <TableRow key={c.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                                        <TableCell sx={{ minWidth: 50, flex: 1, wordBreak: "break-word" }}>
+                                            {i}
+                                        </TableCell>
+                                        <TableCell sx={{ minWidth: 50, flex: 1, wordBreak: "break-word" }}>
+                                            {c.titulo}
+                                        </TableCell>
+                                        <TableCell sx={{ minWidth: 50, flex: 1, wordBreak: "break-word" }}>
+                                            {c.data_publicacao}
+                                        </TableCell>
+                                        <TableCell sx={{ minWidth: 50, flex: 1, wordBreak: "break-word" }}>
+                                            {c.publicado ? "Sim" : "Não"}
+                                        </TableCell>
+                                        <TableCell sx={{ minWidth: 50, flex: 1, wordBreak: "break-word" }}>
+                                            {c.data_limite_pop_up}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Tooltip
+                                                TransitionComponent={Fade}
+                                                TransitionProps={{ timeout: 600 }}
+                                                title="Editar comunicado"
+                                            >
+                                                <Button
+                                                    sx={{
+                                                        backgroundColor: "#642683",
+                                                        "&:hover": { backgroundColor: "#7f3da0" },
+                                                        width: "38px",
+                                                        height: "38px",
+                                                        minWidth: "0",
+                                                        padding: "0",
+                                                    }}
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={editarComunicado}
+                                                >
+                                                    <AddIcon fontSize="small" />
+                                                </Button>
+                                            </Tooltip>
+                                        </TableCell>
+                                        <TableCell sx={{ minWidth: 50, flex: 1, wordBreak: "break-word" }}>
+                                            <Box display="flex" alignItems={"center"} gap={1}>
+                                                {c.ativo ? <Typography>Ativo</Typography> : <Typography>Inativo</Typography>}
+                                                <Android12Switch checked={c.ativo} />
+                                            </Box>
+                                        </TableCell>
+                                        <TableCell sx={{ minWidth: 50, flex: 1, wordBreak: "break-word" }}>
+                                            {c.data_inativacao}
+                                        </TableCell>
+                                        <TableCell sx={{ minWidth: 50, flex: 1, wordBreak: "break-word" }}>
+                                            {c.motivo_inativacao}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Tooltip
+                                                TransitionComponent={Fade}
+                                                TransitionProps={{ timeout: 600 }}
+                                                title="Republicar"
+                                            >
+                                                <Button
+                                                    sx={{
+                                                        backgroundColor: "#44C50C",
+                                                        "&:hover": { backgroundColor: "#48ac1d" },
+                                                        width: "38px",
+                                                        height: "38px",
+                                                        minWidth: "0",
+                                                        padding: "0",
+                                                    }}
+                                                    variant="contained"
+                                                    disableElevation
+                                                    color="secondary"
+                                                >
+                                                    <CachedIcon fontSize="small" />
+                                                </Button>
+                                            </Tooltip>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -330,7 +434,7 @@ export function Comunicados() {
                 )}
                 <Box display="flex" alignItems="center" justifyContent="space-between" pt={1} pb={3} px={4}>
                     <Grid2>
-                        <strong>Total de Registros:</strong> 875
+                        <strong>Total de Registros:</strong> {comunicados?.length}
                     </Grid2>
                     <Grid2>
                         <Button variant="outlined" color="secondary">

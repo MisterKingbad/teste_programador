@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('conteudo');
+            $table->text('descricao');
             $table->boolean('publicado');
             $table->timestamp('data_publicacao')->nullable();
             $table->boolean('ativo')->default(true);

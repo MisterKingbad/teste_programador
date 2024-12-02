@@ -26,6 +26,7 @@ import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import { useState } from "react";
+import { comunicadoService } from "@/src/services/comunicado/comunicadoService";
 
 const Android12Switch = styled(Switch)(() => ({
   '& .MuiSwitch-track': {
@@ -72,8 +73,8 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 }));
 
 export default function CadastrarComunicado() {
+  const service = comunicadoService()
   const [formats, setFormats] = useState<{ [key: string]: string[] }>({});
-  const [contents, setContents] = useState<{ [key: string]: string }>({});
 
   const handleFormatChange = (
     field: string,
@@ -85,12 +86,33 @@ export default function CadastrarComunicado() {
     }));
   };
 
+  const [form, setForm] = useState<any>({
+    titulo: "", 
+    conteudo: "",
+    descricao: "",
+    publicado: false,
+    data_publicacao: "",
+    ativo:false,
+    data_limite_pop_up: "",
+    data_inativacao: "",
+    motivo_inativacao: ""
+  })
+
   const handleContentChange = (field: string, value: string) => {
-    setContents((prevContents) => ({
-      ...prevContents,
+    setForm((prevForm:any) => ({
+      ...prevForm,
       [field]: value,
     }));
   };
+  console.log('form', form)
+
+  const enviarForm = async () => {
+    await service.postComunicado(form).then(() => {
+      alert('cadastrado com sucesso')
+    }).catch((err) => {
+        console.log(err)
+    })
+  }
 
   return (
     <Container maxWidth={false} disableGutters>
@@ -135,6 +157,8 @@ export default function CadastrarComunicado() {
                   id="standard-basic"
                   label="Insira um titulo para o comunicado"
                   variant="standard"
+                  value={form.titulo}
+                  onChange={(e) => setForm({...form, titulo: e.target.value})}
                 />
               </FormControl>
             </Grid2>
@@ -247,7 +271,7 @@ export default function CadastrarComunicado() {
                         borderRadius: 0
                       },
                     }}
-                    value={contents["conteudo"] || ""}
+                    value={form.conteudo}
                     onChange={(e) => handleContentChange("conteudo", e.target.value)}
                     slotProps={{
                       input: {
@@ -320,7 +344,7 @@ export default function CadastrarComunicado() {
                         borderRadius: 0
                       },
                     }}
-                    value={contents["descricao"] || ""}
+                    value={form.descricao}
                     onChange={(e) => handleContentChange("descricao", e.target.value)}
                     slotProps={{
                       input: {
@@ -387,7 +411,7 @@ export default function CadastrarComunicado() {
             <Grid2 size={20}>
               <Box display="flex" justifyContent={"space-between"}>
                 <Box></Box>
-                <Button variant="contained" color="primary" sx={{
+                <Button onClick={enviarForm} variant="contained" color="primary" sx={{
                   backgroundColor: "#00BCD4",
                   "&:hover": { backgroundColor: "#20c5db" }
                 }}>

@@ -6,7 +6,7 @@
     class Comunicado extends Model
     {
         protected $table = "comunicados";
-        protected $fillable = ['titulo', 'conteudo', 'publicado', 'data_publicacao', 'ativo', 'data_limite_pop_up', 'data_inativacao', 'motivo_inativacao'];
+        protected $fillable = ['titulo', 'conteudo', 'descricao', 'publicado', 'data_publicacao', 'ativo', 'data_limite_pop_up', 'data_inativacao', 'motivo_inativacao'];
 
         protected $casts = [
             'publicado' => 'boolean',

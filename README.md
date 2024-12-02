@@ -1,3 +1,3 @@
-Iniciar front: npm run dev
+Iniciar front: npm i, npm run dev
 
-Iniciar back: php artisan serve
+Iniciar back: php artisan migrate, php artisan serve

@@ -4,11 +4,29 @@ import { Box, Button, Card, Container, Fade, FormControl, Grid2, InputLabel, Men
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from "@mui/icons-material/Search";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { comunicadoService } from "@/src/services/comunicado/comunicadoService";
 
 export function Comunicados() {
+    const service = comunicadoService()
     const router = useRouter()
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+    const [comunicados, setComunicados] = useState([]);
+
+    const getAllComunicado = async () => {
+        await service.getComunicados().then((response) => {
+            setComunicados(response.data);
+        }).catch((err) => {
+            console.log(err)
+        })
+    };
+
+    console.log(comunicados)
+
+    useEffect(() => {
+        getAllComunicado();
+    }, []);
 
     const cadastrarComunicado = () => {
         router.push("/comunicados/cadastrar")
@@ -17,7 +35,7 @@ export function Comunicados() {
     const editarComunicado = () => {
 
     }
-    
+
     return (
         <Container maxWidth={false} disableGutters>
             <Card variant="elevation" sx={{ boxShadow: "0px 1px 4px 1px rgba(50, 50, 50, 0.22)" }}>
@@ -37,7 +55,7 @@ export function Comunicados() {
                     }}
                 >
                     <Box>
-                        <InputLabel sx={{fontSize: 12}}>Pesquisar conteúdos *</InputLabel>
+                        <InputLabel sx={{ fontSize: 12 }}>Pesquisar conteúdos *</InputLabel>
                         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                             <TextField label="Titulo, descrição..." variant="standard" />
                             <SearchIcon sx={{ mr: 1, my: 1.5 }} />
@@ -73,9 +91,9 @@ export function Comunicados() {
                                 label="Selecione o tipo de conteúdo"
                             >
                                 <MenuItem value="">
-                                <em>None</em>
+                                    <em>None</em>
                                 </MenuItem>
-                               
+
                             </Select>
                         </FormControl>
                     </Box>
